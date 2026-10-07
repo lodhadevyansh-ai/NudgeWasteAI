@@ -1,0 +1,103 @@
+{
+  "checkpoint": "C:\\Users\\lodha\\Downloads\\NudgeWasteAI\\Machine_Learning\\models\\trained\\nudgewaste_mobilenetv3_small_best.pt",
+  "architecture": "mobilenet_v3_small",
+  "evaluated_at": "2026-10-06T23:50:17.905881",
+  "device": "cpu",
+  "test_sample_count": 4286,
+  "overall_metrics": {
+    "accuracy": 0.8847410172655157,
+    "macro_precision": 0.7337927509677962,
+    "macro_recall": 0.9159042931099093,
+    "macro_f1": 0.7977064166046421,
+    "weighted_f1": 0.888808061625424
+  },
+  "per_class_metrics": {
+    "Wet": {
+      "precision": 0.8604509445460086,
+      "recall": 0.9592391304347826,
+      "f1_score": 0.9071635078702216,
+      "support": 1472
+    },
+    "Dry": {
+      "precision": 0.9714942528735632,
+      "recall": 0.8355081059707394,
+      "f1_score": 0.8983843537414966,
+      "support": 2529
+    },
+    "Sanitary": {
+      "precision": 0.5032258064516129,
+      "recall": 0.9285714285714286,
+      "f1_score": 0.6527196652719666,
+      "support": 84
+    },
+    "Special Care": {
+      "precision": 0.6,
+      "recall": 0.9402985074626866,
+      "f1_score": 0.7325581395348837,
+      "support": 201
+    }
+  },
+  "confusion_matrix": [
+    [
+      1412,
+      48,
+      7,
+      5
+    ],
+    [
+      228,
+      2113,
+      69,
+      119
+    ],
+    [
+      0,
+      4,
+      78,
+      2
+    ],
+    [
+      1,
+      10,
+      1,
+      189
+    ]
+  ],
+  "commonly_confused_pairs": [
+    {
+      "true_class": "Dry",
+      "pred_class": "Wet",
+      "count": 228,
+      "error_rate_in_true_class": 0.09015421115065243
+    },
+    {
+      "true_class": "Dry",
+      "pred_class": "Special Care",
+      "count": 119,
+      "error_rate_in_true_class": 0.04705417160933175
+    },
+    {
+      "true_class": "Dry",
+      "pred_class": "Sanitary",
+      "count": 69,
+      "error_rate_in_true_class": 0.027283511269276393
+    },
+    {
+      "true_class": "Wet",
+      "pred_class": "Dry",
+      "count": 48,
+      "error_rate_in_true_class": 0.03260869565217391
+    },
+    {
+      "true_class": "Special Care",
+      "pred_class": "Dry",
+      "count": 10,
+      "error_rate_in_true_class": 0.04975124378109453
+    }
+  ],
+  "inference_performance": {
+    "avg_latency_ms_per_image": 5.542640478881766,
+    "p95_latency_ms": 7.73110859472581,
+    "throughput_fps": 180.41942352388534
+  }
+}

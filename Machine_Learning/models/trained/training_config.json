@@ -1,0 +1,39 @@
+{
+  "model_architecture": "mobilenet_v3_small",
+  "num_classes": 4,
+  "canonical_classes": [
+    "Wet",
+    "Dry",
+    "Sanitary",
+    "Special Care"
+  ],
+  "class_to_idx": {
+    "Wet": 0,
+    "Dry": 1,
+    "Sanitary": 2,
+    "Special Care": 3
+  },
+  "pretrained": true,
+  "epochs": 5,
+  "batch_size": 32,
+  "learning_rate": 0.001,
+  "optimizer": "AdamW",
+  "image_size": [
+    224,
+    224
+  ],
+  "mean": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "std": [
+    0.229,
+    0.224,
+    0.225
+  ],
+  "best_validation_criterion": "Validation Macro F1",
+  "best_epoch": 5,
+  "best_val_macro_f1": 0.9164654974390638,
+  "final_model_path": "C:\\Users\\lodha\\Downloads\\NudgeWasteAI\\Machine_Learning\\models\\trained\\nudgewaste_mobilenetv3_small_best.pt"
+}

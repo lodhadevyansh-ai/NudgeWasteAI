@@ -1,0 +1,202 @@
+[
+  {
+    "epoch": 1,
+    "stage": "Stage 1: Frozen Backbone",
+    "train_loss": 0.6177020621299744,
+    "train_accuracy": 0.7535714285714286,
+    "train_macro_f1": 0.7525946855196555,
+    "val_loss": 0.4515783576164564,
+    "val_accuracy": 0.8054711246200608,
+    "val_macro_f1": 0.8083561366170062,
+    "generalization_gap": -0.051899696048632205,
+    "overfitting_alert": false,
+    "learning_rate": 0.0009046039886902864,
+    "time_seconds": 54.94096899032593,
+    "val_per_class": {
+      "Wet": {
+        "precision": 0.961038961038961,
+        "recall": 0.8409090909090909,
+        "f1": 0.896969696969697,
+        "support": 88
+      },
+      "Dry": {
+        "precision": 0.7941176470588235,
+        "recall": 0.6136363636363636,
+        "f1": 0.6923076923076923,
+        "support": 88
+      },
+      "Sanitary": {
+        "precision": 0.8615384615384616,
+        "recall": 0.8615384615384616,
+        "f1": 0.8615384615384616,
+        "support": 65
+      },
+      "Special Care": {
+        "precision": 0.680672268907563,
+        "recall": 0.9204545454545454,
+        "f1": 0.782608695652174,
+        "support": 88
+      }
+    }
+  },
+  {
+    "epoch": 2,
+    "stage": "Stage 2: Full Fine-Tuning",
+    "train_loss": 0.3375016130719866,
+    "train_accuracy": 0.8742857142857143,
+    "train_macro_f1": 0.8727278543146643,
+    "val_loss": 0.4727903440535227,
+    "val_accuracy": 0.8358662613981763,
+    "val_macro_f1": 0.8317769182893215,
+    "generalization_gap": 0.03841945288753801,
+    "overfitting_alert": false,
+    "learning_rate": 0.0006548539886902863,
+    "time_seconds": 85.03906583786011,
+    "val_per_class": {
+      "Wet": {
+        "precision": 0.9466666666666667,
+        "recall": 0.8068181818181818,
+        "f1": 0.8711656441717791,
+        "support": 88
+      },
+      "Dry": {
+        "precision": 0.8152173913043478,
+        "recall": 0.8522727272727273,
+        "f1": 0.8333333333333334,
+        "support": 88
+      },
+      "Sanitary": {
+        "precision": 0.9,
+        "recall": 0.6923076923076923,
+        "f1": 0.782608695652174,
+        "support": 65
+      },
+      "Special Care": {
+        "precision": 0.75,
+        "recall": 0.9545454545454546,
+        "f1": 0.84,
+        "support": 88
+      }
+    }
+  },
+  {
+    "epoch": 3,
+    "stage": "Stage 2: Full Fine-Tuning",
+    "train_loss": 0.1675437896166529,
+    "train_accuracy": 0.9435714285714286,
+    "train_macro_f1": 0.9442154019603501,
+    "val_loss": 0.3147881409566634,
+    "val_accuracy": 0.8875379939209727,
+    "val_macro_f1": 0.8886582845490058,
+    "generalization_gap": 0.05603343465045596,
+    "overfitting_alert": false,
+    "learning_rate": 0.0003461460113097138,
+    "time_seconds": 85.30715346336365,
+    "val_per_class": {
+      "Wet": {
+        "precision": 0.8863636363636364,
+        "recall": 0.8863636363636364,
+        "f1": 0.8863636363636364,
+        "support": 88
+      },
+      "Dry": {
+        "precision": 0.8444444444444444,
+        "recall": 0.8636363636363636,
+        "f1": 0.8539325842696629,
+        "support": 88
+      },
+      "Sanitary": {
+        "precision": 0.9491525423728814,
+        "recall": 0.8615384615384616,
+        "f1": 0.9032258064516129,
+        "support": 65
+      },
+      "Special Care": {
+        "precision": 0.8913043478260869,
+        "recall": 0.9318181818181818,
+        "f1": 0.9111111111111111,
+        "support": 88
+      }
+    }
+  },
+  {
+    "epoch": 4,
+    "stage": "Stage 2: Full Fine-Tuning",
+    "train_loss": 0.08050732549279928,
+    "train_accuracy": 0.9764285714285714,
+    "train_macro_f1": 0.9763388444352982,
+    "val_loss": 0.249113321978044,
+    "val_accuracy": 0.9118541033434651,
+    "val_macro_f1": 0.9148309453661809,
+    "generalization_gap": 0.06457446808510636,
+    "overfitting_alert": false,
+    "learning_rate": 9.639601130971379e-05,
+    "time_seconds": 79.10289859771729,
+    "val_per_class": {
+      "Wet": {
+        "precision": 0.9512195121951219,
+        "recall": 0.8863636363636364,
+        "f1": 0.9176470588235294,
+        "support": 88
+      },
+      "Dry": {
+        "precision": 0.8229166666666666,
+        "recall": 0.8977272727272727,
+        "f1": 0.8586956521739131,
+        "support": 88
+      },
+      "Sanitary": {
+        "precision": 0.9393939393939394,
+        "recall": 0.9538461538461539,
+        "f1": 0.9465648854961832,
+        "support": 65
+      },
+      "Special Care": {
+        "precision": 0.9529411764705882,
+        "recall": 0.9204545454545454,
+        "f1": 0.9364161849710982,
+        "support": 88
+      }
+    }
+  },
+  {
+    "epoch": 5,
+    "stage": "Stage 2: Full Fine-Tuning",
+    "train_loss": 0.062055691070854666,
+    "train_accuracy": 0.9828571428571429,
+    "train_macro_f1": 0.982988699143707,
+    "val_loss": 0.21860499042836457,
+    "val_accuracy": 0.9148936170212766,
+    "val_macro_f1": 0.9164654974390638,
+    "generalization_gap": 0.06796352583586629,
+    "overfitting_alert": false,
+    "learning_rate": 1e-06,
+    "time_seconds": 74.35779786109924,
+    "val_per_class": {
+      "Wet": {
+        "precision": 0.9111111111111111,
+        "recall": 0.9318181818181818,
+        "f1": 0.9213483146067416,
+        "support": 88
+      },
+      "Dry": {
+        "precision": 0.8620689655172413,
+        "recall": 0.8522727272727273,
+        "f1": 0.8571428571428571,
+        "support": 88
+      },
+      "Sanitary": {
+        "precision": 0.9253731343283582,
+        "recall": 0.9538461538461539,
+        "f1": 0.9393939393939394,
+        "support": 65
+      },
+      "Special Care": {
+        "precision": 0.9647058823529412,
+        "recall": 0.9318181818181818,
+        "f1": 0.9479768786127167,
+        "support": 88
+      }
+    }
+  }
+]

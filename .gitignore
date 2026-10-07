@@ -1,0 +1,110 @@
+# ============================================================
+# NudgeWasteAI Root Git Ignore
+# ============================================================
+
+# ------------------------------------------------------------
+# Environment / secrets
+# ------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ------------------------------------------------------------
+# Node / React / Vite
+# ------------------------------------------------------------
+node_modules/
+dist/
+build/
+.vite/
+*.log
+
+# ------------------------------------------------------------
+# OS files
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ------------------------------------------------------------
+# IDE/editor
+# ------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ------------------------------------------------------------
+# Jupyter
+# ------------------------------------------------------------
+.ipynb_checkpoints/
+
+# ------------------------------------------------------------
+# Python coverage
+# ------------------------------------------------------------
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ------------------------------------------------------------
+# Temporary files
+# ------------------------------------------------------------
+*.tmp
+*.temp
+*.bak
+
+# ------------------------------------------------------------
+# ML generated/cache files
+# ------------------------------------------------------------
+Machine_Learning/**/__pycache__/
+Machine_Learning/**/.pytest_cache/
+
+# ------------------------------------------------------------
+# Training outputs that should not normally be committed
+# ------------------------------------------------------------
+Machine_Learning/**/runs/
+Machine_Learning/**/logs/
+
+# ------------------------------------------------------------
+# Local database/runtime files
+# ------------------------------------------------------------
+*.sqlite
+*.sqlite3
+# ============================================================
+# NudgeWasteAI ML RAW DATASETS
+# ============================================================
+
+Machine_Learning/datasets/Garbage_Classification/
+Machine_Learning/datasets/Garbage_Dataset_(GD)/
+Machine_Learning/datasets/Medical_Waste_Dataset/
+Machine_Learning/datasets/TACO/
+Machine_Learning/datasets/Waste_Classification_Dataset/
+Machine_Learning/datasets/india_waste_metrics/
+
+# ============================================================
+# ML generated training artifacts
+# ============================================================
+
+Machine_Learning/**/runs/
+Machine_Learning/**/logs/
+
+# ============================================================
+# Keep processed manifests tracked
+# ============================================================
+# Do NOT ignore:
+# Machine_Learning/datasets/processed/manifests/dataset_manifest.csv

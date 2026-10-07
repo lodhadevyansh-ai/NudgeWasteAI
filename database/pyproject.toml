@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nudgewaste-database"
+version = "1.0.0"
+description = "Database access layer and MongoDB package for NudgeWasteAI"
+authors = [{ name = "NudgeWasteAI Team" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pymongo>=4.6.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.2.0",
+    "python-dotenv>=1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]

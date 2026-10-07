@@ -1,0 +1,203 @@
+# NudgeWasteAI Backend API
+
+NudgeWasteAI is a civic waste-segregation platform designed for the Wongsknow India Hackathon. It encourages citizens to classify and segregate household waste into four statutory streams (**Wet**, **Dry**, **Sanitary**, and **Special Care**) through real-time AI classification, localized educational micro-nudges, and a municipal **Swachh Credits** incentive reward system.
+
+---
+
+## 1. Backend Architecture
+
+The backend is built with **FastAPI**, **Pydantic v2**, and **PyMongo** following clean architecture, decoupled service layers, and modular router design.
+
+```text
+backend/
+├── app/
+│   ├── api/
+│   │   ├── routes/
+│   │   │   ├── analytics.py       # Municipal & User Analytics endpoints
+│   │   │   ├── credits.py         # Swachh Credits balance & transaction history
+│   │   │   ├── disposal.py        # Disposal verification & recording
+│   │   │   ├── health.py          # Service health check endpoint
+│   │   │   ├── nudges.py          # Behavioural Nudge Engine endpoints
+│   │   │   ├── prediction.py      # Waste classification & prediction API
+│   │   │   ├── rewards.py         # Municipal incentive catalog & redemption
+│   │   │   ├── users.py           # Registration & Bearer token authentication
+│   │   │   └── waste.py
+│   │   └── dependencies.py        # Reusable auth dependencies (get_current_user)
+│   ├── core/
+│   │   ├── config.py              # Environment configuration (pydantic-settings)
+│   │   ├── constants.py           # Statutory categories, statuses, credit rules
+│   │   └── security.py            # Bcrypt hashing & PyJWT token handlers
+│   ├── middleware/
+│   │   ├── cors.py                # CORS origins configuration
+│   │   └── error_handler.py       # Global JSON exception handlers
+│   ├── schemas/
+│   │   ├── analytics.py           # Analytics response models
+│   │   ├── credits.py             # Credit balance & transaction models
+│   │   ├── disposal.py            # Disposal request & response models
+│   │   ├── nudge.py               # Nudge payload & response models
+│   │   ├── prediction.py         # Prediction request & response models
+│   │   ├── reward.py              # Reward catalog & redemption models
+│   │   └── user.py                # User registration & auth models
+│   ├── services/
+│   │   ├── analytics_service.py   # Aggregation pipeline service
+│   │   ├── classification_service.py # Decoupled ML classification provider layer
+│   │   ├── credits_service.py     # Swachh Credits balance & transaction engine
+│   │   ├── disposal_service.py    # Disposal verification & segregation rules
+│   │   ├── nudge_service.py       # Deterministic rule-based Nudge Engine
+│   │   ├── prediction_service.py  # Prediction validation & confidence engine
+│   │   ├── reward_service.py      # Municipal reward catalog & voucher issuer
+│   │   └── user_service.py        # MongoDB User repository
+│   └── utils/
+│       ├── helpers.py
+│       ├── logger.py              # Structured application logger
+│       └── validators.py         # Category & payload input validators
+├── tests/                         # Pytest automated test suites
+├── main.py                        # Root uvicorn application launcher
+├── pytest.ini                     # Pytest configuration
+├── requirements.txt               # Minimum Python dependencies
+└── README.md                      # Project documentation
+```
+
+---
+
+## 2. Installation & Requirements
+
+### Prerequisites
+* Python 3.10+
+* MongoDB 6.0+ (Local instance or MongoDB Atlas)
+
+### Setup
+1. Clone repository and navigate to backend folder:
+   ```bash
+   cd backend
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
+
+## 3. Environment Variables & Configuration
+
+Create a `.env` file in the `backend/` directory or export environment variables:
+
+```env
+APP_NAME="NudgeWasteAI Backend"
+ENVIRONMENT="development"
+DEBUG=True
+API_PREFIX="/api/v1"
+HOST="0.0.0.0"
+PORT=8000
+CORS_ORIGINS=["http://localhost:3000","http://localhost:8000","http://127.0.0.1:3000","http://127.0.0.1:8000"]
+
+# MongoDB Configuration
+MONGODB_URI="mongodb://localhost:27017"
+MONGODB_DB_NAME="nudgewaste_db"
+
+# JWT Security Configuration
+JWT_SECRET_KEY="NudgeWasteAI_Secret_Key_For_JWT_Tokens_2026_Hackathon"
+JWT_ALGORITHM="HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+```
+
+---
+
+## 4. MongoDB Database Component Integration
+
+The backend interacts with MongoDB collections inside `nudgewaste_db`:
+- **`users`**: User profile documents, password hashes, and Swachh Credits balance.
+- **`disposals`**: Verified waste disposal event logs.
+- **`credit_transactions`**: Auditable credit earning and redemption transaction history.
+- **`reward_redemptions`**: Issued municipal incentive vouchers.
+- **`nudges`**: Educational micro-nudge event logs.
+
+*Resilience Notice: If MongoDB is offline, backend services automatically switch to an isolated in-memory repository store so local development and standalone unit tests execute seamlessly.*
+
+---
+
+## 5. Running the Server
+
+Start Uvicorn development server:
+```bash
+python main.py
+# OR
+uvicorn app.main:app --reload --port 8000
+```
+
+The interactive API documentation will be available at:
+* Swagger UI: `http://localhost:8000/docs`
+* ReDoc: `http://localhost:8000/redoc`
+
+---
+
+## 6. Key API Endpoints
+
+### Health Check
+- `GET /health` : Returns service status, name, environment, and version.
+
+### User Management & Auth
+- `POST /users/register` : Register a new citizen account.
+- `POST /users/login` : Authenticate and receive a JWT Bearer token.
+- `GET /users/me` : Retrieve current authenticated user profile.
+
+### Waste Classification & Prediction
+- `POST /prediction` : Classify waste from base64 camera frame or item label.
+- `POST /prediction/upload` : Classify waste from uploaded camera image file.
+
+### Disposal Verification
+- `POST /disposal` : Record and verify waste disposal against statutory rules.
+- `GET /disposal/history` : Get citizen's chronological disposal history.
+- `GET /disposal/{disposal_id}` : Get single disposal record (isolated to owning user).
+
+### Nudge Engine
+- `POST /nudges/generate` : Generate localized educational micro-nudge.
+- `GET /nudges/{nudge_id}` : Retrieve nudge record by ID.
+
+### Swachh Credits
+- `GET /credits` : Get user's current Swachh Credits balance and statistics.
+- `GET /credits/history` : Retrieve auditable credit transaction history.
+
+### Municipal Rewards
+- `GET /rewards` : View available municipal incentive catalog.
+- `POST /rewards/redeem/{reward_id}` : Redeem credits for municipal voucher.
+- `GET /rewards/my-redemptions` : View citizen's active voucher claim codes.
+
+### Analytics & Reporting
+- `GET /analytics/summary` : Platform-wide waste segregation summary metrics.
+- `GET /analytics/user` : Personal waste segregation metrics for current user.
+- `GET /analytics/waste-distribution` : Volume counts across the 4 statutory streams.
+- `GET /analytics/trends` : Time-series daily segregation trends.
+- `GET /analytics/credits` : Platform Swachh Credits issuance and redemption economics.
+
+---
+
+## 7. End-to-End Workflow
+
+```text
+Citizen Camera Capture 
+   ↓
+POST /prediction (Classifies item into Wet, Dry, Sanitary, or Special Care)
+   ↓
+POST /disposal (Verifies stream segregation against predicted category & confidence)
+   ↓
+POST /nudges/generate (Returns positive micro-nudge & contamination warning if needed)
+   ↓
+Credits Service (Awards Swachh Credits automatically for verified disposals)
+   ↓
+POST /rewards/redeem/{reward_id} (Redeems credits for Property Tax / Metro / Utility vouchers)
+   ↓
+GET /analytics/summary (Aggregates real-time municipal segregation rates and trends)
+```
+
+---
+
+## 8. Automated Testing Suite
+
+Run full automated test suite:
+```bash
+pytest -v
+```
+
+Tests cover health checks, user registration, JWT auth, prediction, category validation, low confidence handling, disposal verification, user isolation, nudge rules, duplicate credit prevention, reward redemptions, analytics aggregation, and end-to-end integration workflows.

@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: nudgewaste-database
+Version: 1.0.0
+Summary: Database access layer and MongoDB package for NudgeWasteAI
+Author: NudgeWasteAI Team
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: pymongo>=4.6.0
+Requires-Dist: pydantic>=2.7.0
+Requires-Dist: pydantic-settings>=2.2.0
+Requires-Dist: python-dotenv>=1.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
