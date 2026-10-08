@@ -32,8 +32,9 @@ services:
           name: nudgewasteai-frontend
           property: url
 
-  - type: static
+  - type: web
     name: nudgewasteai-frontend
+    runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
