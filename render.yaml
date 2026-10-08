@@ -30,7 +30,7 @@ services:
         fromService:
           type: web
           name: nudgewasteai-frontend
-          property: url
+          envVarKey: RENDER_EXTERNAL_URL
 
   - type: web
     name: nudgewasteai-frontend
@@ -43,4 +43,4 @@ services:
         fromService:
           type: web
           name: nudgewasteai-backend
-          property: url
+          envVarKey: RENDER_EXTERNAL_URL
