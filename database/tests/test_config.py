@@ -10,7 +10,7 @@ from database.config.collections_config import CollectionNames, COLLECTIONS
 
 def test_default_database_settings():
     """Tests default database configuration values."""
-    settings = DatabaseSettings()
+    settings = DatabaseSettings(_env_file=None)
     assert settings.MONGODB_URI == "mongodb://localhost:27017"
     assert settings.MONGODB_DB_NAME == "nudgewaste_db"
     assert settings.MONGODB_TIMEOUT_MS == 1500
