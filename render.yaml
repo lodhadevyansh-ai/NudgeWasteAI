@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: nudgewasteai-backend
+    runtime: python
+    rootDir: .
+    buildCommand: pip install -r backend/requirements.txt -r database/requirements.txt -r Machine_Learning/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "False"
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB_NAME
+        value: nudgewaste_db
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key: ML_MODEL_ENABLED
+        value: "True"
+      - key: ML_CHECKPOINT_PATH
+        value: Machine_Learning/models/trained/nudgewaste_mobilenetv3_small_best.pt
+      - key: ML_MODEL_VERSION
+        value: v1.0.0-mobilenetv3-small
+      - key: CORS_ORIGINS
+        fromService:
+          type: web
+          name: nudgewasteai-frontend
+          property: url
+
+  - type: static
+    name: nudgewasteai-frontend
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: nudgewasteai-backend
+          property: url
