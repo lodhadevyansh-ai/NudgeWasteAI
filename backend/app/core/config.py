@@ -3,10 +3,14 @@ Application Configuration Settings.
 Loads configuration from environment variables or .env file using pydantic-settings.
 """
 
+from pathlib import Path
 import json
 from typing import List, Union
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+BACKEND_DIR = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = BACKEND_DIR.parent
 
 
 class Settings(BaseSettings):
@@ -23,7 +27,7 @@ class Settings(BaseSettings):
 
     # CORS Settings
     CORS_ORIGINS: Union[List[str], str] = Field(
-        default=["*"],
+        default=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000", "http://127.0.0.1:3000"],
         description="Allowed CORS origins"
     )
 
@@ -76,8 +80,20 @@ class Settings(BaseSettings):
         description="JWT Access Token expiration time in minutes"
     )
 
+    @model_validator(mode="after")
+    def validate_production_security(self) -> "Settings":
+        if self.ENVIRONMENT.lower() == "production":
+            if (
+                not self.JWT_SECRET_KEY
+                or self.JWT_SECRET_KEY.strip() == "CHANGE_THIS_SECRET_KEY_IN_PRODUCTION_ENV"
+            ):
+                raise ValueError(
+                    "JWT_SECRET_KEY must be explicitly configured via environment variable in production environment."
+                )
+        return self
+
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=(PROJECT_ROOT / ".env", BACKEND_DIR / ".env"),
         env_file_encoding="utf-8",
         case_sensitive=True,
         extra="ignore"
