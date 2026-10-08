@@ -19,11 +19,14 @@ def setup_cors(app: FastAPI) -> None:
     if isinstance(origins, str):
         origins = [origins]
 
+    configured_origins = [o.strip() for o in origins if isinstance(o, str) and o.strip()]
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins if origins != ["*"] else ["*"],
+        allow_origins=configured_origins if configured_origins else ["*"],
         allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
+

@@ -2,7 +2,8 @@ import axios from 'axios';
 import { handleMockRequest } from './mockService';
 
 // Get API base URL from Vite environment variable with safe localhost fallback
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+const rawBaseUrl = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000').trim().replace(/\/+$/, '');
+const API_BASE_URL = rawBaseUrl.endsWith('/api/v1') ? rawBaseUrl.slice(0, -7) : rawBaseUrl;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -20,10 +21,14 @@ apiClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // Ensure API prefix /api/v1 is handled if required, or keep relative URL clean
-    if (!config.url.startsWith('/api/v1') && !config.url.startsWith('/health')) {
-      config.url = `/api/v1${config.url.startsWith('/') ? config.url : '/' + config.url}`;
+    // Ensure API prefix /api/v1 is handled without creating duplicate /api/v1/api/v1
+    let cleanUrl = config.url || '';
+    if (cleanUrl.startsWith('/api/v1/api/v1')) {
+      cleanUrl = cleanUrl.replace('/api/v1/api/v1', '/api/v1');
+    } else if (!cleanUrl.startsWith('/api/v1') && !cleanUrl.startsWith('/health')) {
+      cleanUrl = `/api/v1${cleanUrl.startsWith('/') ? cleanUrl : '/' + cleanUrl}`;
     }
+    config.url = cleanUrl;
 
     return config;
   },
