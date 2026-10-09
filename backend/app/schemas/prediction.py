@@ -37,6 +37,9 @@ class PredictionResponse(BaseModel):
     timestamp: datetime = Field(..., description="UTC timestamp of prediction execution")
     model_version: str = Field(..., description="Classification model version identifier")
     item_label: Optional[str] = Field(default=None, description="Recognized item label or description")
+    material_category: Optional[str] = Field(default=None, description="Physical material taxonomy category (e.g. Plastic, E-waste / Batteries)")
+    disposal_bin: Optional[str] = Field(default=None, description="Recommended statutory disposal receptacle")
+    disposal_guide: Optional[str] = Field(default=None, description="Civic disposal instructions")
     processing_time_ms: float = Field(..., ge=0.0, description="Processing execution time in milliseconds")
     feedback_nudge: Optional[str] = Field(default=None, description="Civic disposal guidance or recapture nudge")
     all_probabilities: Optional[Dict[str, float]] = Field(

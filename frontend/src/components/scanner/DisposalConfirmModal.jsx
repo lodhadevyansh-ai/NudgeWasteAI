@@ -14,7 +14,7 @@ export const DisposalConfirmModal = ({ isOpen, onClose, prediction, onConfirm, i
 
   if (!prediction) return null;
 
-  const category = prediction.category || STATUTORY_CATEGORIES.DRY;
+  const category = prediction.selected_bin_category || prediction.category || STATUTORY_CATEGORIES.DRY;
   const meta = CATEGORY_DETAILS[category] || CATEGORY_DETAILS[STATUTORY_CATEGORIES.DRY];
 
   const handleFileChange = (e, type) => {

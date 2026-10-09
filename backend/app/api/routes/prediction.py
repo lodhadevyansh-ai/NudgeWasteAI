@@ -58,9 +58,10 @@ async def predict_waste_upload(
                 detail="Uploaded file is empty",
             )
         base64_encoded = base64.b64encode(contents).decode("utf-8")
+        clean_hint = item_label.strip() if (item_label and item_label.strip()) else None
         payload = PredictionRequest(
             image_base64=base64_encoded,
-            item_label=item_label or file.filename,
+            item_label=clean_hint,
             min_confidence=min_confidence,
         )
         return prediction_service.predict_waste(payload)

@@ -83,6 +83,10 @@ class PredictionService:
         model_version = raw_result.get("model_version", "v1.0.0-statutory-classifier")
         recognized_label = raw_result.get("item_label") or request.item_label
         probabilities = raw_result.get("probabilities")
+        material_category = raw_result.get("material_category")
+        disposal_bin = raw_result.get("disposal_bin")
+        disposal_guide = raw_result.get("disposal_guide")
+        is_raw_uncertain = raw_result.get("is_uncertain", False)
 
         # 3. Category Validation & Normalization
         if not validate_waste_category(raw_category):
@@ -92,11 +96,11 @@ class PredictionService:
         # 4. Confidence Threshold Handling
         min_threshold = request.min_confidence if request.min_confidence is not None else DEFAULT_CONFIDENCE_THRESHOLD
 
-        if raw_category is not None and confidence >= min_threshold:
+        if raw_category is not None and confidence >= min_threshold and not is_raw_uncertain:
             is_uncertain = False
             final_category = raw_category
-            nudge = get_category_disposal_nudge(final_category)
-            logger.info(f"Prediction success: category='{final_category}', confidence={confidence:.2f}, model='{model_version}'")
+            nudge = disposal_guide or get_category_disposal_nudge(final_category)
+            logger.info(f"Prediction success: category='{final_category}', material='{material_category}', confidence={confidence:.2f}, model='{model_version}'")
         else:
             is_uncertain = True
             final_category = None
@@ -139,6 +143,9 @@ class PredictionService:
             timestamp=now,
             model_version=model_version,
             item_label=recognized_label,
+            material_category=material_category,
+            disposal_bin=disposal_bin,
+            disposal_guide=disposal_guide or nudge,
             processing_time_ms=elapsed_ms,
             feedback_nudge=nudge,
             all_probabilities=probabilities,

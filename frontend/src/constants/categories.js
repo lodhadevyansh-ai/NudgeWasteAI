@@ -3,6 +3,7 @@ export const STATUTORY_CATEGORIES = {
   DRY: 'Dry',
   SANITARY: 'Sanitary',
   SPECIAL_CARE: 'Special Care',
+  UNKNOWN: 'Unknown',
 };
 
 export const CATEGORY_DETAILS = {
@@ -49,5 +50,16 @@ export const CATEGORY_DETAILS = {
     description: 'Hazardous, electronic, or toxic municipal waste items.',
     examples: ['Batteries & electronic gadgets', 'Fluorescent bulbs & tubes', 'Paint cans & chemicals', 'Expired medicines'],
     disposalGuide: 'Store safely and hand over to designated E-Waste & hazardous waste collectors.',
+  },
+  [STATUTORY_CATEGORIES.UNKNOWN]: {
+    name: 'Unknown / Needs Review',
+    binName: 'Manual Review',
+    binColor: '#F59E0B', // Amber
+    bgColor: '#FFFBEB',
+    borderColor: '#FDE68A',
+    textColor: '#B45309',
+    description: 'Uncertain, blurry, or unsupported item requiring human inspection.',
+    examples: ['Unclear photos', 'Mixed materials', 'Unrecognized objects'],
+    disposalGuide: 'Recapture image clearly under good lighting, or manually inspect the material to choose the correct bin.',
   },
 };

@@ -29,3 +29,12 @@ async def health_check():
             "latency_ms": db_health.get("latency_ms"),
         },
     }
+
+
+@router.get("/health/ml", summary="ML Model Health Check")
+async def ml_health_check():
+    """
+    ML model health check endpoint returning model loading status, version, device, and classes.
+    """
+    from app.services.classification_service import classification_service
+    return classification_service.get_health()

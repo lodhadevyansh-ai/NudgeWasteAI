@@ -100,6 +100,9 @@ class NudgeWastePredictor:
 
         self.model: Optional[NudgeWasteClassifier] = None
         self.is_loaded: bool = False
+        self.canonical_classes: List[str] = list(CANONICAL_CLASSES)
+        self.idx_to_class: Dict[int, str] = dict(IDX_TO_CLASS)
+        self.num_classes: int = NUM_CLASSES
         self._load_model()
 
     def _load_model(self) -> None:
@@ -119,6 +122,11 @@ class NudgeWastePredictor:
                 checkpoint = torch.load(self.checkpoint_path, map_location=self.device)
                 architecture = checkpoint.get("architecture", "mobilenet_v3_small")
                 num_classes = checkpoint.get("num_classes", NUM_CLASSES)
+
+                if "canonical_classes" in checkpoint and checkpoint["canonical_classes"]:
+                    self.canonical_classes = list(checkpoint["canonical_classes"])
+                    self.idx_to_class = {i: c for i, c in enumerate(self.canonical_classes)}
+                    self.num_classes = len(self.canonical_classes)
 
                 self.model = build_model(
                     architecture=architecture,
@@ -203,14 +211,14 @@ class NudgeWastePredictor:
 
             pred_idx_val = int(pred_idx.item())
             confidence_val = float(conf.item())
-            predicted_class = IDX_TO_CLASS[pred_idx_val]
+            predicted_class = self.idx_to_class.get(pred_idx_val, "Unknown")
 
             prob_dict = {
-                IDX_TO_CLASS[i]: float(probs[i].item())
-                for i in range(NUM_CLASSES)
+                self.idx_to_class[i]: float(probs[i].item())
+                for i in range(self.num_classes)
             }
 
-            status_str = "SUCCESS" if confidence_val >= 0.50 else "LOW_CONFIDENCE"
+            status_str = "SUCCESS" if confidence_val >= 0.60 else "LOW_CONFIDENCE"
 
             return {
                 "status": status_str,
